@@ -191,6 +191,17 @@
   .app-chip .name{font-family:var(--mono);font-size:.74rem;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;
     white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 
+  /* below this width, 5 columns can't fit without crushing — switch to a stacked grid */
+  @media(max-width:860px){
+    .stack{flex-wrap:wrap}
+    .stack-row{flex:1 1 calc(50% - 14px);min-width:150px}
+    .stack-row .cat{min-height:0}
+    .app-chip .name{white-space:normal;overflow:visible;text-overflow:clip}
+  }
+  @media(max-width:520px){
+    .stack-row{flex:1 1 100%}
+  }
+
   /* selected work grid */
   .work{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2vw,22px)}
   .wc{display:block;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--panel);
