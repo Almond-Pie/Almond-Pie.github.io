@@ -5,25 +5,20 @@
 
 # Site pages + scripts
 !/Aphos.html
-!/Balikong.html
 !/BuildToLast.html
 !/Capoeira.html
 !/CS500.html
 !/Explorations.html
-!/Mobee Angels.html
 !/Portfolio.html
 !/index.html
 !/Voucht.html
 !/Voucht Website.html
-!/halftone.js
 !/image-slot.js
 !/.gitignore
 !/README.md
 
 # Site assets
 !/Aphos/**
-!/Balikong/**
-!/Mobee Angels/**
 !/Voucht/**
 !/Video Ad's/**
 !/assets/**
