@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en" data-motion="on">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aphos — Jelani Bryan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#06070E; --panel:#0B0D1A; --panel2:#11142A;
+    --ink:#ECEAF6; --muted:#9596B8; --faint:#5C5E80;
+    --line:rgba(180,190,235,.12);
+    --gold:#FFC558; --coral:#FF6B3D; --celest:#6FA8FF; --violet:#9A7BFF; --green:#7CE3A0;
+    --blue:#6FA8FF; --lime:#7CE3A0; --yellow:#FFC558; --pink:#FF8A3D;
+    --prism:linear-gradient(90deg,#FFC65C,#FF8A3D,#E8503D,#9E2E45);
+    --disp:'Bricolage Grotesque', system-ui, sans-serif;
+    --body:'Hanken Grotesk', system-ui, sans-serif;
+    --mono:'JetBrains Mono', ui-monospace, monospace;
+    --maxw:1380px; --pad:clamp(20px,5vw,80px);
+    --c1:var(--gold); --c2:var(--coral); --c3:var(--celest); --c4:var(--violet);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.5;overflow-x:clip}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  ::selection{background:var(--gold);color:var(--paper)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad)}
+  .mono{font-family:var(--mono);font-size:.74rem;letter-spacing:.04em;text-transform:uppercase}
+
+  /* ambient */
+  .sky{position:fixed;inset:0;z-index:-2;pointer-events:none;background:radial-gradient(1100px 700px at 50% -8%, rgba(111,168,255,.10), transparent 60%),radial-gradient(900px 600px at 50% 108%, rgba(255,107,61,.07), transparent 60%),var(--paper)}
+  .grid{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.4;background-image:radial-gradient(rgba(150,160,210,.10) 1px, transparent 1px);background-size:34px 34px;-webkit-mask-image:radial-gradient(120% 80% at 50% 25%, #000 28%, transparent 76%);mask-image:radial-gradient(120% 80% at 50% 25%, #000 28%, transparent 76%)}
+
+  /* NAV */
+  header.nav{position:fixed;inset:0 0 auto 0;z-index:60;transition:background .35s,border-color .35s;border-bottom:1px solid transparent}
+  header.nav.stuck{background:color-mix(in srgb,var(--paper) 86%,transparent);backdrop-filter:blur(9px);border-bottom-color:var(--line)}
+  .nav-in{max-width:var(--maxw);margin:0 auto;padding:15px var(--pad);display:flex;align-items:center;justify-content:space-between;gap:20px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:var(--disp);font-weight:800;font-size:1.08rem;letter-spacing:.02em;text-transform:uppercase}
+  .brand .jb{width:30px;height:30px;border-radius:8px;background:var(--prism);color:var(--paper);display:grid;place-items:center;font-size:.74rem;font-weight:800;transform:rotate(-6deg);transition:transform .4s cubic-bezier(.2,1.4,.4,1)}
+  .brand:hover .jb{transform:rotate(8deg) scale(1.08)}
+  .nav-links{display:flex;align-items:center;gap:4px}
+  .nav-links a{padding:8px 13px;border-radius:100px;font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);transition:.2s}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-links a.pill{background:var(--ink);color:var(--paper)}
+  .nav-links a.pill:hover{background:var(--gold);color:var(--paper);box-shadow:0 0 22px rgba(255,197,88,.5)}
+  @media(max-width:720px){.nav-links a:not(.pill){display:none}}
+
+  /* REVEAL */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s cubic-bezier(.16,1,.3,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1!important;transform:none!important}}
+
+  /* HERO */
+  .cs-hero{padding-top:clamp(130px,18vh,200px);padding-bottom:clamp(50px,7vh,90px)}
+  .cs-back{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:clamp(28px,4vh,48px);transition:color .2s;border:1.5px solid var(--line);padding:9px 16px;border-radius:100px}
+  .cs-back:hover{color:var(--ink);border-color:var(--ink)}
+  .cs-hero-grid{display:grid;grid-template-columns:1fr 380px;gap:clamp(32px,5vw,72px);align-items:start}
+  .cs-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+  .cs-tags span{font-family:var(--mono);font-size:.64rem;text-transform:uppercase;letter-spacing:.06em;border:1.5px solid var(--line);border-radius:100px;padding:5px 12px;color:var(--muted)}
+  .cs-h1{font-family:var(--disp);font-weight:800;font-size:clamp(5.5rem,16vw,11rem);letter-spacing:-.045em;line-height:.86;margin-bottom:26px}
+  .cs-sub{font-size:clamp(1.05rem,1.8vw,1.28rem);line-height:1.55;max-width:50ch;color:var(--muted);font-weight:500}
+  .cs-logo-box{background:#fff;border-radius:24px;border:1px solid var(--line);padding:clamp(32px,5vw,56px);display:flex;align-items:center;justify-content:center;aspect-ratio:1/1}
+  .cs-logo-box img{width:74%;height:auto}
+  @media(max-width:860px){.cs-hero-grid{grid-template-columns:1fr}.cs-logo-box{max-width:280px;aspect-ratio:unset;padding:36px 40px}}
+
+  /* META STRIP */
+  .cs-meta{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding-block:clamp(18px,2.5vh,28px);margin-bottom:clamp(60px,10vh,130px)}
+  .cs-meta-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+  .cs-meta-item .k{font-family:var(--mono);font-size:.64rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px}
+  .cs-meta-item .v{font-family:var(--disp);font-weight:700;font-size:1.05rem;letter-spacing:-.02em;line-height:1.2}
+  @media(max-width:700px){.cs-meta-grid{grid-template-columns:1fr 1fr}}
+
+  /* SECTIONS */
+  .cs-section{padding-block:clamp(60px,10vh,130px)}
+  .cs-section + .cs-section{border-top:1.5px solid var(--line)}
+  .s-label{font-family:var(--mono);font-size:.72rem;color:var(--coral);text-transform:uppercase;letter-spacing:.12em;margin-bottom:18px}
+  .s-label::after{content:"_";color:var(--coral);animation:lblink 1.4s step-end infinite}
+  @keyframes lblink{50%{opacity:0}}
+  .s-h2{font-family:var(--disp);font-weight:800;font-size:clamp(2.2rem,6vw,4.4rem);letter-spacing:-.038em;line-height:.9;margin-bottom:clamp(22px,3.5vh,36px)}
+  .body-p{font-size:1.06rem;line-height:1.68;max-width:64ch}
+  .body-p + .body-p{margin-top:16px}
+  .body-p b{font-weight:700}
+
+  /* PULL QUOTE */
+  .pull-quote{border-left:4px solid var(--c1);padding-left:clamp(18px,3vw,34px);margin:clamp(32px,4.5vh,52px) 0}
+  .pull-quote p{font-family:var(--disp);font-weight:700;font-size:clamp(1.4rem,3.2vw,2.4rem);letter-spacing:-.025em;line-height:1.12;max-width:28ch}
+
+  /* INSIGHT BAND */
+  .insight-band{background:var(--panel);color:var(--ink);padding-block:clamp(64px,11vh,130px);border-block:1px solid var(--line)}
+  .insight-inner{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,80px);align-items:center}
+  .insight-h{font-family:var(--disp);font-weight:800;font-size:clamp(2.2rem,6vw,4.6rem);letter-spacing:-.04em;line-height:.9;color:var(--ink)}
+  .insight-h em{font-style:normal;color:var(--c2)}
+  .insight-body{font-size:1.05rem;line-height:1.7;color:var(--muted)}
+  .insight-body + .insight-body{margin-top:16px}
+  .insight-body b{color:var(--ink);font-weight:700}
+  @media(max-width:740px){.insight-inner{grid-template-columns:1fr}}
+
+  /* COLORWAY STRIP */
+  .colorway-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,2vw,22px);margin-top:clamp(32px,4.5vh,52px)}
+  .cw-card{border:1px solid var(--line);border-radius:20px;overflow:hidden}
+  .cw-img{padding:clamp(20px,3vw,36px);display:flex;align-items:center;justify-content:center;min-height:200px}
+  .cw-img img{width:65%;height:auto}
+  .cw-label{border-top:1px solid var(--line);padding:12px 16px;font-family:var(--mono);font-size:.65rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+  @media(max-width:640px){.colorway-strip{grid-template-columns:1fr}}
+
+  /* PALETTE SWATCHES */
+  .palette-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:clamp(24px,3.5vh,40px)}
+  .swatch{border-radius:12px;border:1px solid var(--line);overflow:hidden;flex:1;min-width:80px}
+  .sw-color{height:64px}
+  .sw-info{padding:9px 11px}
+  .sw-name{font-family:var(--mono);font-size:.6rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);display:block}
+  .sw-hex{font-family:var(--mono);font-size:.68rem;color:var(--ink);font-weight:500;margin-top:2px;display:block}
+
+  /* PAPAVER GRID */
+  .papaver-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,24px);margin-top:clamp(32px,4.5vh,52px);align-items:start}
+  .pap-card{border:1px solid var(--line);border-radius:20px;overflow:hidden}
+  .pap-card img{width:100%;display:block}
+  .pap-footer{border-top:1px solid var(--line);padding:12px 16px;font-family:var(--mono);font-size:.65rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+  @media(max-width:640px){.papaver-grid{grid-template-columns:1fr}}
+
+  /* STATUS */
+  .status-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(28px,4vh,44px)}
+  .chip{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:100px;font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;border:1px solid var(--line)}
+  .chip.done{background:var(--ink);color:var(--paper)}
+  .chip.done::before{content:"✓"}
+  .chip.next{border-color:var(--c1);color:var(--c1)}
+  .chip.next::before{content:"→"}
+
+  /* PROJECT NAV */
+  .project-nav{border-top:1px solid var(--line);padding-block:clamp(40px,6vh,72px);display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .pnav-link{display:flex;flex-direction:column;gap:5px}
+  .pnav-link .dir{font-family:var(--mono);font-size:.64rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+  .pnav-link .ptitle{font-family:var(--disp);font-weight:800;font-size:clamp(1.2rem,2.8vw,2rem);letter-spacing:-.03em;transition:color .2s}
+  .pnav-link:hover .ptitle{color:var(--c1)}
+  .pnav-link.right{text-align:right}
+
+  /* FOOTER */
+  footer.foot{border-top:1px solid var(--line);padding-block:30px}
+  .foot-in{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px;color:var(--faint)}
+  .foot-in .top{cursor:pointer;transition:color .25s}.foot-in .top:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+
+<div class="sky" aria-hidden="true"></div>
+<div class="grid" aria-hidden="true"></div>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <a class="brand" href="Portfolio.html">
+      <span class="jb">JB</span>
+      Jelani Bryan
+    </a>
+    <nav class="nav-links">
+      <a href="Portfolio.html#work">Work</a>
+      <a href="Portfolio.html#about">About</a>
+      <a href="Portfolio.html#contact" class="pill">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="cs-hero">
+    <div class="wrap">
+      <a class="cs-back" href="Portfolio.html#work">← All work</a>
+      <div class="cs-hero-grid">
+        <div>
+          <div class="cs-tags reveal">
+            <span>03 / Identity</span>
+            <span>Branding</span>
+            <span>Type</span>
+            <span>Art Direction</span>
+          </div>
+          <h1 class="cs-h1 reveal">Aphos</h1>
+          <p class="cs-sub reveal">A topographic lettermark — structure and flow living in the same surface. One pattern that scales from stamp to poster.</p>
+        </div>
+        <div class="cs-logo-box reveal">
+          <img src="Aphos/Logo/Aphos Color.png" alt="Aphos topographic A lettermark, colour version" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- META -->
+  <div class="cs-meta reveal">
+    <div class="wrap">
+      <div class="cs-meta-grid">
+        <div class="cs-meta-item">
+          <div class="k">Role</div>
+          <div class="v">Brand Design</div>
+        </div>
+        <div class="cs-meta-item">
+          <div class="k">Type</div>
+          <div class="v">Identity Exploration</div>
+        </div>
+        <div class="cs-meta-item">
+          <div class="k">Deliverables</div>
+          <div class="v">Lettermark · Colorways · Editorial</div>
+        </div>
+        <div class="cs-meta-item">
+          <div class="k">Status</div>
+          <div class="v">Mark complete</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BRIEF -->
+  <section class="cs-section">
+    <div class="wrap">
+      <div class="s-label reveal">01 — Brief</div>
+      <h2 class="s-h2 reveal">One glyph.<br>A whole language.</h2>
+      <p class="body-p reveal">Most lettermarks fail because they stop at the silhouette — shape without texture, form without feeling. The challenge with Aphos was to build a mark where <b>looking closer rewards you</b>. The outer shape is recognisable at a glance; the interior holds an entire visual system.</p>
+      <p class="body-p reveal">The answer came from topographic maps — contour lines that trace the shape of terrain. Applied inside a letterform, they turn a flat glyph into something that feels like it has landscape inside it.</p>
+
+      <div class="pull-quote reveal">
+        <p>"Terrain maps make flat things feel like they contain worlds."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSIGHT BAND -->
+  <div class="insight-band">
+    <div class="wrap">
+      <div class="insight-inner">
+        <div>
+          <div class="s-label" style="margin-bottom:24px">02 — Insight</div>
+          <h2 class="insight-h">A <em>letterform</em><br>with altitude</h2>
+        </div>
+        <div>
+          <p class="insight-body">Topographic contour lines are inherently a system — they follow rules (equidistant, never crossing) that produce infinite variation from a single logic. That makes them a perfect pattern device: <b>the rules stay constant, the terrain always differs</b>.</p>
+          <p class="insight-body">The notch cut into the right leg of the "A" breaks the seriffed form just enough to make it unmistakably custom — not a typeface character, a designed mark. Combined with the contour fill, the result is a letter that reads as object, not text.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARK -->
+  <section class="cs-section">
+    <div class="wrap">
+      <div class="s-label reveal">03 — Mark</div>
+      <h2 class="s-h2 reveal">Three colorways,<br>one system</h2>
+      <p class="body-p reveal">The mark was developed in three colorways to prove versatility across contexts — screen, print, and mono reproduction. Each colorway shifts the tone of the mark without changing its structure.</p>
+
+      <div class="colorway-strip reveal">
+        <div class="cw-card">
+          <div class="cw-img" style="background:#fff">
+            <img src="Aphos/Logo/Aphos Color.png" alt="Aphos A — colour (lavender)" />
+          </div>
+          <div class="cw-label">Colour — lavender + steel</div>
+        </div>
+        <div class="cw-card">
+          <div class="cw-img" style="background:#fff">
+            <img src="Aphos/Logo/B&W.png" alt="Aphos A — outline" />
+          </div>
+          <div class="cw-label">Outline — single weight</div>
+        </div>
+        <div class="cw-card">
+          <div class="cw-img" style="background:#1A1A1A">
+            <img src="Aphos/Logo/Aphos Black.png" alt="Aphos A — reversed on black" />
+          </div>
+          <div class="cw-label">Reversed — print & dark contexts</div>
+        </div>
+      </div>
+
+      <div class="palette-row reveal">
+        <div class="swatch">
+          <div class="sw-color" style="background:#B4BFDB"></div>
+          <div class="sw-info"><span class="sw-name">Periwinkle</span><span class="sw-hex">#B4BFDB</span></div>
+        </div>
+        <div class="swatch">
+          <div class="sw-color" style="background:#4E6880"></div>
+          <div class="sw-info"><span class="sw-name">Steel</span><span class="sw-hex">#4E6880</span></div>
+        </div>
+        <div class="swatch">
+          <div class="sw-color" style="background:#1A7A6E"></div>
+          <div class="sw-info"><span class="sw-name">Deep Teal</span><span class="sw-hex">#1A7A6E</span></div>
+        </div>
+        <div class="swatch">
+          <div class="sw-color" style="background:#8B1A1A"></div>
+          <div class="sw-info"><span class="sw-name">Crimson</span><span class="sw-hex">#8B1A1A</span></div>
+        </div>
+        <div class="swatch">
+          <div class="sw-color" style="background:#1A1A1A"></div>
+          <div class="sw-info"><span class="sw-name">Near Black</span><span class="sw-hex">#1A1A1A</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAPAVER -->
+  <section class="cs-section">
+    <div class="wrap">
+      <div class="s-label reveal">04 — Application</div>
+      <h2 class="s-h2 reveal">Papaver Rhoeas —<br>pattern at scale</h2>
+      <p class="body-p reveal">The topographic contour pattern is not locked inside the lettermark. In the Papaver Rhoeas editorial, it scales up to fill the entire surface — becoming a background field against which photography and typography sit. The result tests whether the pattern system holds at macro scale, and whether it produces tension with photographic imagery.</p>
+      <p class="body-p reveal">The teal + crimson colorway was developed specifically for this application, pulling from the natural palette of the poppy photograph rather than imposing brand colour onto it.</p>
+
+      <div class="papaver-grid reveal">
+        <div class="pap-card">
+          <img src="Aphos/Poppy/Papaver Alpha.png" alt="Papaver Rhoeas poster — light background" />
+          <div class="pap-footer">Papaver Rhoeas — light treatment</div>
+        </div>
+        <div class="pap-card">
+          <img src="Aphos/Poppy/Papaver V 4 (Final).png" alt="Papaver Rhoeas poster — black background, final" />
+          <div class="pap-footer">Papaver Rhoeas — dark treatment (final)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATUS -->
+  <section class="cs-section" style="border-top:1.5px solid var(--line)">
+    <div class="wrap">
+      <div class="s-label reveal">05 — Status</div>
+      <h2 class="s-h2 reveal">Where it stands</h2>
+      <div class="status-chips reveal">
+        <span class="chip done">Lettermark</span>
+        <span class="chip done">Three colorways</span>
+        <span class="chip done">Pattern system</span>
+        <span class="chip done">Editorial application</span>
+        <span class="chip next">Full brand guidelines</span>
+        <span class="chip next">Motion / animation</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECT NAV -->
+  <div class="wrap">
+    <div class="project-nav reveal">
+      <a class="pnav-link" href="Mobee Angels.html">
+        <span class="dir">← Previous</span>
+        <span class="ptitle">Mobee Angels</span>
+      </a>
+      <a class="pnav-link right" href="Balikong.html">
+        <span class="dir">Next →</span>
+        <span class="ptitle">Balikong</span>
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<footer class="foot wrap">
+  <div class="foot-in">
+    <span class="mono">© 2026 Jelani Bryan — Made in London, with intent</span>
+    <span class="mono top" onclick="scrollTo({top:0,behavior:'smooth'})">Back to top ↑</span>
+  </div>
+</footer>
+
+<script src="image-slot.js"></script>
+<script>
+  const nav = document.getElementById('nav');
+  addEventListener('scroll', () => nav.classList.toggle('stuck', scrollY > 16), { passive: true });
+  const revs = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  function checkReveal() {
+    const vh = window.innerHeight || 800;
+    for (let i = revs.length - 1; i >= 0; i--) {
+      if (revs[i].getBoundingClientRect().top < vh * 0.9) { revs[i].classList.add('in'); revs.splice(i, 1); }
+    }
+  }
+  addEventListener('scroll', checkReveal, { passive: true });
+  addEventListener('resize', checkReveal);
+  checkReveal();
+  setTimeout(function () { revs.slice().forEach(function (el) { if (el.getBoundingClientRect().top < window.innerHeight) { el.classList.add('in'); } }); }, 1800);
+</script>
+</body>
+</html>

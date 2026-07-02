@@ -1,0 +1,38 @@
+# Allowlist approach: ignore everything by default, then explicitly
+# un-ignore only what the live site actually references.
+*
+!*/
+
+# Site pages + scripts
+!/Aphos.html
+!/Balikong.html
+!/BuildToLast.html
+!/Mobee Angels.html
+!/Portfolio.html
+!/index.html
+!/Voucht.html
+!/Voucht Website.html
+!/halftone.js
+!/image-slot.js
+!/.gitignore
+!/README.md
+
+# Site assets
+!/Aphos/**
+!/Balikong/**
+!/Mobee Angels/**
+!/Voucht/**
+!/Video Ad's/**
+!/assets/**
+
+# Re-exclude things that snuck back in via the folder allowlists above
+Video Ad's/Base 44 Spec Ad-source.mp4
+*.af
+*.af~lock~
+**/node_modules/
+**/.next/
+**/dist/
+**/build/
+*.log
+Thumbs.db
+.DS_Store
