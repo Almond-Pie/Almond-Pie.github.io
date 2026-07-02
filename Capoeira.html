@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-motion="on">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Capoeira · Jelani Bryan</title>
+<meta name="description" content="A short edit on capoeira — the roda, the instruments, and its fingerprints on pop culture. Edited by Jelani Bryan." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --void:#06070E; --panel:#0C0E1C; --panel2:#11142A;
+    --ink:#ECEAF6; --muted:#9596B8; --faint:#5C5E80;
+    --line:rgba(180,190,235,.13);
+    --gold:#FFC558; --coral:#FF6B3D; --celest:#6FA8FF; --violet:#9A7BFF; --green:#7CE3A0;
+    --prism:linear-gradient(90deg,#FFC65C,#FF8A3D,#E8503D,#9E2E45);
+    --disp:'Bricolage Grotesque', system-ui, sans-serif;
+    --body:'Hanken Grotesk', system-ui, sans-serif;
+    --mono:'JetBrains Mono', ui-monospace, monospace;
+    --maxw:1080px; --pad:clamp(20px,5vw,80px);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
+  body{background:var(--void);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.6;overflow-x:clip}
+  a{color:inherit}
+  img{display:block;max-width:100%}
+  ::selection{background:var(--gold);color:var(--void)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad)}
+  .mono{font-family:var(--mono);font-size:.74rem;letter-spacing:.04em;text-transform:uppercase}
+  .glow{text-shadow:0 0 26px rgba(255,197,88,.35),0 0 60px rgba(111,168,255,.18)}
+
+  .sky{position:fixed;inset:0;z-index:-2;pointer-events:none;
+    background:radial-gradient(1100px 700px at 50% -8%, rgba(111,168,255,.10), transparent 60%),
+      radial-gradient(900px 600px at 50% 108%, rgba(255,107,61,.07), transparent 60%),var(--void);}
+  .grid{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.4;
+    background-image:radial-gradient(rgba(150,160,210,.10) 1px, transparent 1px);background-size:34px 34px;
+    -webkit-mask-image:radial-gradient(120% 80% at 50% 25%, #000 28%, transparent 76%);
+    mask-image:radial-gradient(120% 80% at 50% 25%, #000 28%, transparent 76%);}
+
+  /* nav */
+  header.nav{position:fixed;inset:0 0 auto 0;z-index:60;transition:background .35s,border-color .35s;border-bottom:1px solid transparent}
+  header.nav.stuck{background:color-mix(in srgb,var(--void) 78%,transparent);backdrop-filter:blur(11px);border-bottom-color:var(--line)}
+  .nav-in{max-width:1320px;margin:0 auto;padding:15px var(--pad);display:flex;align-items:center;justify-content:space-between;gap:20px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:var(--disp);font-weight:800;font-size:1.12rem;letter-spacing:-.03em}
+  .brand .jb{width:30px;height:30px;border-radius:8px;background:var(--prism);color:var(--void);display:grid;place-items:center;font-size:.74rem;font-weight:800;transform:rotate(-6deg);transition:transform .4s cubic-bezier(.2,1.4,.4,1)}
+  .back{font-family:var(--mono);font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;transition:color .25s}
+  .back:hover{color:var(--ink)}
+
+  /* header block */
+  .lead{padding-top:clamp(120px,18vh,180px);text-align:center;position:relative}
+  .beam{position:absolute;top:0;left:50%;transform:translateX(-50%);width:min(520px,82vw);height:100%;z-index:-1;pointer-events:none;
+    background:radial-gradient(60% 36% at 50% 0%, rgba(255,197,88,.18), transparent 70%);
+    -webkit-mask-image:linear-gradient(180deg,#000,transparent);mask-image:linear-gradient(180deg,#000,transparent)}
+  .kicker{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+  .lead h1{font-family:var(--disp);font-weight:800;letter-spacing:-.04em;line-height:.92;font-size:clamp(2.8rem,9vw,6rem)}
+  .lead .tag{margin-top:20px;font-size:clamp(1.05rem,2vw,1.3rem);color:var(--muted);max-width:48ch;margin-inline:auto}
+
+  /* credits strip */
+  .credits{display:flex;flex-wrap:wrap;justify-content:center;gap:0;margin:clamp(30px,5vh,46px) auto 0;
+    border:1px solid var(--line);border-radius:14px;overflow:hidden;width:fit-content;max-width:100%}
+  .credits div{padding:14px 22px;border-right:1px solid var(--line)}
+  .credits div:last-child{border-right:0}
+  .credits .k{font-family:var(--mono);font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+  .credits .v{font-family:var(--disp);font-weight:700;font-size:1.02rem;margin-top:4px}
+  @media(max-width:620px){.credits{flex-direction:column;width:100%}.credits div{border-right:0;border-bottom:1px solid var(--line)}}
+
+  /* film */
+  .stage{margin:clamp(40px,7vh,80px) auto clamp(20px,3vh,40px);max-width:var(--maxw)}
+  .frame{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line);aspect-ratio:16/9;background:#04050B;
+    box-shadow:0 0 0 1px rgba(255,197,88,.10),0 50px 130px -50px rgba(111,168,255,.4)}
+  .frame iframe,.frame video{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+  .frame .poster{position:absolute;inset:0;cursor:pointer}
+  .frame .poster image-slot{width:100%;height:100%;display:block}
+  .frame .play{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+  .frame .play span{width:82px;height:82px;border-radius:50%;display:grid;place-items:center;font-size:1.6rem;color:var(--void);background:var(--gold);box-shadow:0 0 56px rgba(255,197,88,.6)}
+  .stage .note{font-family:var(--mono);font-size:.66rem;color:var(--faint);text-align:center;margin-top:14px}
+
+  /* CRT / dither overlay — matches the homepage thumbnail treatment, static (no motion) */
+  .crt-fx{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+  .crt-fx .scanlines{position:absolute;inset:0;opacity:.5;
+    background:repeating-linear-gradient(180deg, rgba(0,0,0,.32) 0 1px, transparent 1px 4px);
+    mix-blend-mode:multiply}
+  .crt-fx .grain{position:absolute;inset:0;width:100%;height:100%;mix-blend-mode:overlay;opacity:.14;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    background-size:130px 130px}
+  .crt-fx .aberr{position:absolute;inset:0;mix-blend-mode:screen;opacity:.35;
+    box-shadow:inset 2px 0 0 -1px rgba(255,50,60,.4), inset -2px 0 0 -1px rgba(60,180,255,.4)}
+
+  .outro{text-align:center;padding-block:clamp(50px,8vh,90px);border-top:1px solid var(--line);margin-top:clamp(40px,6vh,70px)}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:15px 26px;border-radius:100px;font-weight:700;font-size:.98rem;border:1.5px solid var(--ink);background:var(--ink);color:var(--void);transition:transform .3s,box-shadow .3s,background .3s}
+  .btn:hover{background:var(--gold);border-color:var(--gold);transform:translateY(-3px);box-shadow:0 0 30px rgba(255,197,88,.45)}
+
+  footer.foot{border-top:1px solid var(--line);padding-block:30px}
+  .foot-in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;color:var(--faint)}
+
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="sky" aria-hidden="true"></div>
+<div class="grid" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <a href="Portfolio.html" class="brand"><span class="jb">JB</span>Jelani Bryan</a>
+    <a href="Portfolio.html#work" class="back">← All work</a>
+  </div>
+</header>
+
+<main>
+  <!-- LEAD -->
+  <header class="lead wrap">
+    <div class="beam" aria-hidden="true"></div>
+    <div class="kicker">Personal Project · Capoeira</div>
+    <h1 class="glow">Capoeira</h1>
+    <p class="tag">A short edit on capoeira — the roda, the instruments, and its fingerprints on pop culture.</p>
+
+    <div class="credits">
+      <div><div class="k">Role</div><div class="v">Director · Editor</div></div>
+      <div><div class="k">Type</div><div class="v">Personal / documentary edit</div></div>
+      <div><div class="k">Format</div><div class="v">2:24 · 16:9</div></div>
+      <div><div class="k">Year</div><div class="v">2026</div></div>
+    </div>
+  </header>
+
+  <!-- FILM -->
+  <div class="stage wrap" id="film">
+    <div class="frame">
+      <div class="poster" id="poster" data-src="Video Ad's/Capoeira.mp4" data-embed="">
+        <image-slot src="Video Ad's/Capoeira Thumbnail.png" placeholder="Capoeira"></image-slot>
+        <div class="crt-fx" aria-hidden="true">
+          <div class="scanlines"></div>
+          <div class="grain"></div>
+          <div class="aberr"></div>
+        </div>
+        <span class="play" aria-hidden="true"><span>▶</span></span>
+      </div>
+      <div id="player"></div>
+    </div>
+  </div>
+
+  <div class="outro wrap">
+    <a class="btn" href="Portfolio.html#contact">Get in touch <span>↗</span></a>
+  </div>
+</main>
+
+<footer class="foot wrap">
+  <div class="foot-in">
+    <span class="mono">© 2026 Jelani Bryan — Made in London, with intent</span>
+    <a class="mono" href="Portfolio.html#work">← Back to work</a>
+  </div>
+</footer>
+
+<script src="image-slot.js"></script>
+<script>
+  const nav=document.getElementById('nav');
+  addEventListener('scroll',()=>nav.classList.toggle('stuck',scrollY>16),{passive:true});
+
+  // Click-to-play: local file (data-src) takes priority; falls back to a hosted embed (data-embed) if set.
+  const poster=document.getElementById('poster');
+  poster&&poster.addEventListener('click',function(){
+    const wrap=document.getElementById('player');
+    const src=poster.getAttribute('data-src');
+    const url=poster.getAttribute('data-embed');
+    if(src){
+      const v=document.createElement('video');
+      v.controls=true;v.autoplay=true;v.playsInline=true;v.preload='none';v.volume=0.5;
+      v.poster='Video Ad\'s/Capoeira Thumbnail.png';
+      const s=document.createElement('source');s.src=src;s.type='video/mp4';v.appendChild(s);
+      wrap.appendChild(v);poster.style.display='none';
+      v.play&&v.play().catch(function(){});
+      return;
+    }
+    if(!url){return;}
+    const f=document.createElement('iframe');
+    f.src=url+(url.indexOf('?')>-1?'&':'?')+'autoplay=1';
+    f.allow='autoplay; fullscreen; picture-in-picture';f.setAttribute('allowfullscreen','');
+    wrap.appendChild(f);poster.style.display='none';
+  });
+</script>
+</body>
+</html>
