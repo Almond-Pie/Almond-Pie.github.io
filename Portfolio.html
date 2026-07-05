@@ -339,7 +339,7 @@
       <div class="info">
         <div class="role">Director · Editor · Concept — Base 44</div>
         <h3>Build to Last</h3>
-        <p>A 70-second speculative ad: four ways to build something that dies — <b>flip, impress, launch, too fast</b> — then the one that doesn't. Raw internet-culture wreckage cut against premium engineering UI, so the audience feels the difference before they've read a word.</p>
+        <p>A 69-second speculative ad: four ways to build something that dies — <b>flip, impress, launch, too fast</b> — then the one that doesn't. Raw internet-culture wreckage cut against premium engineering UI, so the audience feels the difference before they've read a word.</p>
         <span class="go">Read the case study <span class="c">↗</span></span>
       </div>
     </a>
@@ -499,14 +499,16 @@
       im.onload=function(){ bg.style.backgroundImage='url("'+im.src+'")'; bg.classList.add('has-media'); };
       im.src='assets/hero.png';
     }
-    if(reduce){ usePoster(); return; }
+    // Show the poster immediately so there's no jump from the CSS scene straight to video.
+    usePoster();
+    if(reduce){ return; }
     var v=document.createElement('video');
     v.muted=true; v.defaultMuted=true; v.loop=true; v.autoplay=true; v.playsInline=true; v.preload='auto';
     v.setAttribute('muted',''); v.setAttribute('playsinline',''); v.poster='assets/hero.png';
     var s=document.createElement('source'); s.src='assets/hero.mp4'; s.type='video/mp4'; v.appendChild(s);
     v.addEventListener('loadeddata',function(){ bg.classList.add('has-media'); bg.appendChild(v); var p=v.play&&v.play(); if(p&&p.catch)p.catch(function(){}); });
-    v.addEventListener('error',usePoster);
-    s.addEventListener('error',usePoster);
+    v.addEventListener('error',function(){});
+    s.addEventListener('error',function(){});
     v.load();
   })();
 
