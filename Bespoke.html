@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en" data-motion="on">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bespoke — Jelani Bryan</title>
+<meta name="description" content="A self-initiated product-visualisation study for Bespoke London — remodelling, relighting and re-marketing a high-street fragrance I love. 3D, look dev and motion in Blender." />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Jelani Bryan" />
+<meta property="og:title" content="Bespoke — Jelani Bryan" />
+<meta property="og:description" content="A self-initiated product-visualisation study for Bespoke London — remodelling, relighting and re-marketing a high-street fragrance I love. 3D, look dev and motion in Blender." />
+<meta property="og:image" content="https://almond-pie.github.io/Bespoke/Renders/hero-ai.jpg" />
+<meta property="og:url" content="https://almond-pie.github.io/Bespoke.html" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Bespoke — Jelani Bryan" />
+<meta name="twitter:description" content="A self-initiated product-visualisation study for Bespoke London — remodelling, relighting and re-marketing a high-street fragrance I love." />
+<meta name="twitter:image" content="https://almond-pie.github.io/Bespoke/Renders/hero-ai.jpg" />
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  /* ---- DESIGN SYSTEM (mirrors Portfolio.html) ---- */
+  :root{
+    --paper:#06070E; --panel:#0B0D1A; --panel2:#11142A;
+    --ink:#ECEAF6; --muted:#9596B8; --faint:#5C5E80;
+    --line:rgba(180,190,235,.12);
+    --gold:#FFC558; --coral:#FF6B3D; --celest:#6FA8FF; --violet:#9A7BFF; --green:#7CE3A0;
+    --prism:linear-gradient(90deg,#FFC65C,#FF8A3D,#E8503D,#9E2E45);
+    --disp:'Bricolage Grotesque', system-ui, sans-serif;
+    --body:'Hanken Grotesk', system-ui, sans-serif;
+    --mono:'JetBrains Mono', ui-monospace, monospace;
+    --maxw:1380px; --pad:clamp(20px,5vw,80px);
+    --c1:var(--gold); --c2:var(--coral); --c3:var(--celest); --c4:var(--violet);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.5;overflow-x:clip}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  ::selection{background:var(--gold);color:var(--paper)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad)}
+  .mono{font-family:var(--mono);font-size:.74rem;letter-spacing:.04em;text-transform:uppercase}
+
+  /* ambient */
+  .sky{position:fixed;inset:0;z-index:-2;pointer-events:none;background:radial-gradient(1100px 700px at 50% -8%, rgba(232,80,61,.12), transparent 60%),radial-gradient(900px 600px at 50% 108%, rgba(255,138,61,.07), transparent 60%),var(--paper)}
+  .grid{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.4;background-image:radial-gradient(rgba(150,160,210,.10) 1px, transparent 1px);background-size:34px 34px;-webkit-mask-image:radial-gradient(120% 80% at 50% 25%, #000 28%, transparent 76%);mask-image:radial-gradient(120% 80% at 50% 25%, #000 28%, transparent 76%)}
+
+  /* ---- NAV ---- */
+  header.nav{position:fixed;inset:0 0 auto 0;z-index:60;transition:background .35s,border-color .35s;border-bottom:1px solid transparent}
+  header.nav.stuck{background:color-mix(in srgb,var(--paper) 86%,transparent);backdrop-filter:blur(9px);border-bottom-color:var(--line)}
+  .nav-in{max-width:var(--maxw);margin:0 auto;padding:15px var(--pad);display:flex;align-items:center;justify-content:space-between;gap:20px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:var(--disp);font-weight:800;font-size:1.08rem;letter-spacing:.02em;text-transform:uppercase}
+  .brand .jb{width:30px;height:30px;border-radius:8px;background:var(--prism);color:var(--paper);display:grid;place-items:center;font-size:.74rem;font-weight:800;transform:rotate(-6deg);transition:transform .4s cubic-bezier(.2,1.4,.4,1)}
+  .brand:hover .jb{transform:rotate(8deg) scale(1.08)}
+  .nav-links{display:flex;align-items:center;gap:4px}
+  .nav-links a{padding:8px 13px;border-radius:100px;font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);transition:.2s}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-links a.pill{background:var(--ink);color:var(--paper)}
+  .nav-links a.pill:hover{background:var(--gold);color:var(--paper);box-shadow:0 0 22px rgba(255,197,88,.5)}
+  @media(max-width:720px){.nav-links a:not(.pill){display:none}}
+
+  /* ---- REVEAL ---- */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s cubic-bezier(.16,1,.3,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1!important;transform:none!important}}
+
+  /* ---- CASE STUDY HERO ---- */
+  .cs-hero{padding-top:clamp(130px,18vh,200px);padding-bottom:clamp(50px,7vh,90px)}
+  .cs-back{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:clamp(28px,4vh,48px);transition:color .2s;border:1.5px solid var(--line);padding:9px 16px;border-radius:100px}
+  .cs-back:hover{color:var(--ink);border-color:var(--ink)}
+  .cs-hero-grid{display:grid;grid-template-columns:1fr 400px;gap:clamp(32px,5vw,72px);align-items:center}
+  .cs-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+  .cs-tags span{font-family:var(--mono);font-size:.64rem;text-transform:uppercase;letter-spacing:.06em;border:1.5px solid var(--line);border-radius:100px;padding:5px 12px;color:var(--muted)}
+  .cs-h1{font-family:var(--disp);font-weight:800;font-size:clamp(5rem,14vw,10rem);letter-spacing:-.045em;line-height:.86;margin-bottom:26px}
+  .cs-sub{font-size:clamp(1.05rem,1.8vw,1.28rem);line-height:1.55;max-width:52ch;color:var(--muted);font-weight:500}
+  .cs-hero-media{border-radius:22px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.5)}
+  .cs-hero-media img{width:100%;display:block;aspect-ratio:9/16;object-fit:cover}
+  @media(max-width:860px){.cs-hero-grid{grid-template-columns:1fr}.cs-hero-media{max-width:340px}}
+
+  /* ---- META STRIP ---- */
+  .cs-meta{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding-block:clamp(18px,2.5vh,28px);margin-bottom:clamp(60px,10vh,130px)}
+  .cs-meta-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+  .cs-meta-item .k{font-family:var(--mono);font-size:.64rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px}
+  .cs-meta-item .v{font-family:var(--disp);font-weight:700;font-size:1.05rem;letter-spacing:-.02em;line-height:1.2}
+  @media(max-width:700px){.cs-meta-grid{grid-template-columns:1fr 1fr}}
+
+  /* ---- SHARED SECTION PARTS ---- */
+  .cs-section{padding-block:clamp(60px,10vh,130px)}
+  .cs-section + .cs-section{border-top:1.5px solid var(--line)}
+  .s-label{font-family:var(--mono);font-size:.72rem;color:var(--coral);text-transform:uppercase;letter-spacing:.12em;margin-bottom:18px}
+  .s-label::after{content:"_";color:var(--coral);animation:lblink 1.4s step-end infinite}
+  @keyframes lblink{50%{opacity:0}}
+  .s-h2{font-family:var(--disp);font-weight:800;font-size:clamp(2.2rem,6vw,4.4rem);letter-spacing:-.038em;line-height:.9;margin-bottom:clamp(22px,3.5vh,36px)}
+  .body-p{font-size:1.06rem;line-height:1.68;max-width:64ch}
+  .body-p + .body-p{margin-top:16px}
+  .body-p b{font-weight:700}
+
+  /* ---- PULL QUOTE ---- */
+  .pull-quote{border-left:4px solid var(--c2);padding-left:clamp(18px,3vw,34px);margin:clamp(32px,4.5vh,52px) 0}
+  .pull-quote p{font-family:var(--disp);font-weight:700;font-size:clamp(1.4rem,3.2vw,2.4rem);letter-spacing:-.025em;line-height:1.12;max-width:28ch}
+  .pull-quote cite{display:block;margin-top:12px;font-family:var(--mono);font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-style:normal}
+
+  /* ---- INSIGHT BAND ---- */
+  .insight-band{background:var(--panel);color:var(--ink);padding-block:clamp(64px,11vh,130px);border-block:1px solid var(--line)}
+  .insight-inner{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,80px);align-items:center}
+  .insight-h{font-family:var(--disp);font-weight:800;font-size:clamp(2.2rem,6vw,4.6rem);letter-spacing:-.04em;line-height:.9;color:var(--ink)}
+  .insight-h em{font-style:normal;color:var(--c2)}
+  .insight-body{font-size:1.05rem;line-height:1.7;color:var(--muted)}
+  .insight-body + .insight-body{margin-top:16px}
+  .insight-body b{color:var(--ink);font-weight:700}
+  @media(max-width:740px){.insight-inner{grid-template-columns:1fr}}
+
+  /* ---- IMAGE GALLERY ---- */
+  .gal{display:grid;gap:clamp(12px,2vw,20px);margin-top:clamp(32px,4.5vh,52px)}
+  .gal-2{grid-template-columns:1fr 1fr}
+  .gal-3{grid-template-columns:1fr 1fr 1fr}
+  .gal-4{grid-template-columns:repeat(4,1fr)}
+  .gal figure{border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#07090A;position:relative}
+  .gal img{width:100%;display:block;aspect-ratio:4/5;object-fit:cover;transition:transform .6s cubic-bezier(.16,1,.3,1)}
+  .gal figure:hover img{transform:scale(1.04)}
+  .gal figcaption{font-family:var(--mono);font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding:11px 14px;border-top:1px solid var(--line)}
+  .gal .step{position:absolute;top:12px;left:12px;font-family:var(--mono);font-size:.6rem;letter-spacing:.06em;padding:5px 10px;border-radius:100px;background:color-mix(in srgb,var(--paper) 72%,transparent);backdrop-filter:blur(6px);border:1px solid var(--line);color:var(--ink)}
+  @media(max-width:760px){.gal-3,.gal-4{grid-template-columns:1fr 1fr}}
+  @media(max-width:460px){.gal-2,.gal-3,.gal-4{grid-template-columns:1fr}}
+
+  /* ---- AI FINALS (click-to-reveal prompt) ---- */
+  .finals-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2vw,20px);margin-top:clamp(32px,4.5vh,52px)}
+  .final-card{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#07090A}
+  .final-card>img{width:100%;display:block;aspect-ratio:9/16;object-fit:cover}
+  .final-card .badge{position:absolute;top:13px;left:13px;z-index:2;font-family:var(--mono);font-size:.58rem;letter-spacing:.06em;text-transform:uppercase;padding:6px 11px;border-radius:100px;background:color-mix(in srgb,var(--paper) 70%,transparent);backdrop-filter:blur(6px);border:1px solid var(--line);color:var(--ink)}
+  .final-card details{position:static}
+  .final-card summary{position:absolute;top:13px;right:13px;z-index:4;list-style:none;cursor:pointer;font-family:var(--mono);font-size:.58rem;letter-spacing:.06em;text-transform:uppercase;padding:6px 11px;border-radius:100px;background:color-mix(in srgb,var(--paper) 70%,transparent);backdrop-filter:blur(6px);border:1px solid var(--line);color:var(--ink);transition:background .2s,color .2s}
+  .final-card summary::-webkit-details-marker{display:none}
+  .final-card summary:hover{border-color:var(--ink)}
+  .final-card details[open] summary{background:var(--ink);color:var(--paper)}
+  .final-card .prompt-panel{position:absolute;inset:0;z-index:3;display:flex;align-items:flex-end;padding:clamp(16px,2vw,22px);background:linear-gradient(0deg, color-mix(in srgb,var(--paper) 94%,transparent) 45%, color-mix(in srgb,var(--paper) 40%,transparent));opacity:0;pointer-events:none;transition:opacity .35s}
+  .final-card details[open] .prompt-panel{opacity:1}
+  .final-card .prompt-panel div{max-height:78%;overflow:auto}
+  .final-card .prompt-panel .k{display:block;font-family:var(--mono);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--c1);margin-bottom:8px}
+  .final-card .prompt-panel p{font-family:var(--mono);font-size:.66rem;line-height:1.6;color:var(--ink)}
+  @media(max-width:560px){.finals-grid{grid-template-columns:1fr}}
+
+  /* ---- BIG FIGURE ---- */
+  .cs-figure{margin-top:clamp(32px,4.5vh,52px);border-radius:22px;overflow:hidden;border:1px solid var(--line);background:#07090A}
+  .cs-figure img{width:100%;display:block}
+  .cs-figure figcaption{font-family:var(--mono);font-size:.64rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding:13px 18px;border-top:1px solid var(--line)}
+
+  /* ---- VIDEO ---- */
+  .cs-video{margin-top:clamp(32px,4.5vh,52px);border-radius:22px;overflow:hidden;border:1px solid var(--line);background:#000}
+  .cs-video video{width:100%;display:block;aspect-ratio:16/9;object-fit:cover;background:#000}
+  .cs-video figcaption{font-family:var(--mono);font-size:.64rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding:13px 18px;border-top:1px solid var(--line)}
+
+  /* ---- WORKFLOW STEPS ---- */
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,2vw,20px);margin-top:clamp(32px,4.5vh,52px)}
+  .flow-step{border:1px solid var(--line);border-radius:18px;padding:22px 22px;background:var(--paper)}
+  .flow-step .n{font-family:var(--mono);font-size:.64rem;color:var(--c1);letter-spacing:.06em;margin-bottom:12px}
+  .flow-step h4{font-family:var(--disp);font-weight:800;font-size:1.15rem;letter-spacing:-.02em;margin-bottom:8px}
+  .flow-step p{font-size:.9rem;line-height:1.55;color:var(--muted)}
+  @media(max-width:760px){.flow{grid-template-columns:1fr 1fr}}
+  @media(max-width:460px){.flow{grid-template-columns:1fr}}
+
+  /* ---- STATUS ---- */
+  .status-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(28px,4vh,44px)}
+  .chip{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:100px;font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;border:1px solid var(--line)}
+  .chip.done{background:var(--ink);color:var(--paper)}
+  .chip.done::before{content:"✓"}
+  .chip.next{border-color:var(--c1);color:var(--c1)}
+  .chip.next::before{content:"→"}
+
+  /* ---- PROJECT NAV ---- */
+  .project-nav{border-top:1px solid var(--line);padding-block:clamp(40px,6vh,72px);display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .pnav-link{display:flex;flex-direction:column;gap:5px}
+  .pnav-link .dir{font-family:var(--mono);font-size:.64rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+  .pnav-link .ptitle{font-family:var(--disp);font-weight:800;font-size:clamp(1.2rem,2.8vw,2rem);letter-spacing:-.03em;transition:color .2s}
+  .pnav-link:hover .ptitle{color:var(--c1)}
+  .pnav-link.right{text-align:right}
+
+  /* ---- FOOTER ---- */
+  footer.foot{border-top:1px solid var(--line);padding-block:30px}
+  .foot-in{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px;color:var(--faint)}
+  .foot-in .top{cursor:pointer;transition:color .25s}.foot-in .top:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+
+<div class="sky" aria-hidden="true"></div>
+<div class="grid" aria-hidden="true"></div>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <a href="Portfolio.html" class="brand"><span class="jb">JB</span>Jelani Bryan</a>
+    <nav class="nav-links">
+      <a href="Portfolio.html#work">Work</a>
+      <a href="Portfolio.html#about">About</a>
+      <a href="Portfolio.html#contact" class="pill">Get in touch</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ═══ HERO ═══ -->
+  <section class="cs-hero wrap">
+    <a href="Portfolio.html#work" class="cs-back">← Selected work</a>
+    <div class="cs-hero-grid">
+      <div>
+        <div class="cs-tags">
+          <span>02</span><span>3D</span><span>Product Viz</span><span>Look Dev</span><span>Motion</span><span>2025–26</span>
+        </div>
+        <h1 class="cs-h1">Bespoke</h1>
+        <p class="cs-sub">A self-initiated product-visualisation study for a high-street fragrance I actually wear — remodelled, relit and re-marketed from scratch in Blender, to prove the brand could sell it far better than it currently does.</p>
+      </div>
+      <figure class="cs-hero-media reveal">
+        <img src="Bespoke/Renders/hero-ai.jpg" alt="Bespoke London Caramel Amber &amp; Cashmere — 3D render, warm amber lighting" />
+      </figure>
+    </div>
+  </section>
+
+  <!-- ═══ META STRIP ═══ -->
+  <div class="cs-meta wrap">
+    <div class="cs-meta-grid">
+      <div class="cs-meta-item">
+        <div class="k">Role</div>
+        <div class="v">3D · Look Dev · Product Viz</div>
+      </div>
+      <div class="cs-meta-item">
+        <div class="k">Brief</div>
+        <div class="v">Self-initiated · Spec</div>
+      </div>
+      <div class="cs-meta-item">
+        <div class="k">Year</div>
+        <div class="v">2025–26</div>
+      </div>
+      <div class="cs-meta-item">
+        <div class="k">Made with</div>
+        <div class="v">Blender · Cycles · Seedream</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 01 THE SPARK ═══ -->
+  <section class="cs-section wrap">
+    <p class="s-label">01 — The spark</p>
+    <h2 class="s-h2">I started this<br>for the smell.</h2>
+    <p class="body-p reveal">I genuinely love <b>Bespoke London's Caramel Amber &amp; Cashmere</b> — it lasts all day, punches well above its high-street price, and the deep-red bottle is quietly beautiful. I wanted to learn <b>Blender, look dev and product visualisation</b>, so for my first real project I picked the object on my shelf I liked looking at most. Nobody briefed it. It just grew.</p>
+  </section>
+
+  <!-- ═══ 02 THE PROBLEM ═══ -->
+  <div class="insight-band">
+    <div class="wrap insight-inner">
+      <div class="reveal">
+        <p class="mono" style="color:var(--c2);margin-bottom:20px">02 — The problem</p>
+        <h2 class="insight-h">A great product,<br><em>marketed like an<br>afterthought.</em></h2>
+      </div>
+      <div class="reveal">
+        <p class="insight-body">Bespoke has a good product and a feed that doesn't show it — a <b>repetitive grid</b> of the same flat-lay, much of it low-res AI renders that read as "slop" up close. Engagement is near-zero for a brand this size.</p>
+        <p class="insight-body">The tell is in their own numbers: the one post that <b>outperformed everything</b> was a scrappy UGC clip — a real hand, a real product, a real moment. The audience is there; the brand just isn't giving them anything worth stopping for. That gap is exactly the kind of problem I want to solve.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 03 LEARNING THE CRAFT ═══ -->
+  <section class="cs-section wrap">
+    <p class="s-label">03 — Learning the craft</p>
+    <h2 class="s-h2">Making glass<br>look like glass.</h2>
+    <p class="body-p">The bottle was the whole point — and the hardest part. Modelling the form was one problem; making the <b>red glass actually read as glass</b> was another entirely. Getting refraction, thickness and the way light bends <i>through</i> the bottle to behave under real lighting took iteration after iteration. Early versions look like plastic. You can watch it slowly become glass.</p>
+
+    <div class="gal gal-4 reveal">
+      <figure><span class="step">WIP 01</span><img src="Bespoke/Renders/wip-1.jpg" alt="Bespoke bottle — early blockout render" /><figcaption>Blockout · flat material</figcaption></figure>
+      <figure><span class="step">WIP 02</span><img src="Bespoke/Renders/wip-2.jpg" alt="Bespoke bottle — early material test" /><figcaption>First glass shader</figcaption></figure>
+      <figure><span class="step">WIP 03</span><img src="Bespoke/Renders/wip-3.jpg" alt="Bespoke bottle — refined refraction test" /><figcaption>Refraction &amp; depth</figcaption></figure>
+      <figure><span class="step">WIP 04</span><img src="Bespoke/Renders/wip-4.jpg" alt="Bespoke bottle — near-final material" /><figcaption>Label &amp; thickness dialled in</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- ═══ 04 LOOK DEVELOPMENT ═══ -->
+  <section class="cs-section wrap">
+    <p class="s-label">04 — Look development</p>
+    <h2 class="s-h2">One bottle,<br>many moods.</h2>
+    <p class="body-p">With the model resolved, look dev became the real playground — lighting the same asset a dozen ways to find the fragrance's personality. <b>Caramel Amber &amp; Cashmere is warm, rich and a little nocturnal</b>, so I chased that: molten amber gradients, hard crimson key lights, and specular streaks that rake across the glass to sell its depth.</p>
+
+    <div class="gal gal-2 reveal">
+      <figure><img src="Bespoke/Renders/look-amber.jpg" alt="Bespoke bottle — warm amber lighting study" /><figcaption>Amber wash — soft, editorial</figcaption></figure>
+      <figure><img src="Bespoke/Renders/look-streak.jpg" alt="Bespoke bottle — crimson light streak study" /><figcaption>Crimson streak — high drama</figcaption></figure>
+      <figure><img src="Bespoke/Renders/look-crimson.jpg" alt="Bespoke bottle — deep crimson key light" /><figcaption>Deep key — moody, premium</figcaption></figure>
+      <figure><img src="Bespoke/Renders/look-warm.jpg" alt="Bespoke bottle — warm side-lit study" /><figcaption>Warm side-light — product-hero</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- ═══ 05 ART DIRECTION ═══ -->
+  <section class="cs-section wrap">
+    <p class="s-label">05 — Art direction</p>
+    <h2 class="s-h2">Building a world<br>around it.</h2>
+    <p class="body-p">Great fragrance imagery isn't just a lit bottle — it's a <b>scene</b>. I built environments to push my composition and scene-making: faceted low-poly sets, near-black luxury backdrops, architectural corridors. The point was to practise directing an image, not just rendering an object — the difference between "here's the product" and "here's the feeling."</p>
+
+    <div class="gal gal-4 reveal">
+      <figure><img src="Bespoke/Renders/scene-cream.jpg" alt="Bespoke bottle — cream faceted set" /><figcaption>Cream · faceted set</figcaption></figure>
+      <figure><img src="Bespoke/Renders/scene-noir.jpg" alt="Bespoke bottle — noir faceted set" /><figcaption>Noir · high contrast</figcaption></figure>
+      <figure><img src="Bespoke/Renders/scene-cube.jpg" alt="Bespoke bottle — dark architectural backdrop" /><figcaption>Architectural · relief wall</figcaption></figure>
+      <figure><img src="Bespoke/Renders/scene-corridor.jpg" alt="Bespoke bottle — corridor scene" /><figcaption>Corridor · deep space</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- ═══ 06 MOTION ═══ -->
+  <section class="cs-section wrap">
+    <p class="s-label">06 — Motion</p>
+    <h2 class="s-h2">My first<br>animation.</h2>
+    <p class="body-p">The first thing I ever animated in Blender. Honestly, it's rough — loose timing, a camera move I'd stage differently now — but I'm keeping it in, because the growth <i>is</i> the story. Next step: rebuild it properly, then use clean 3D frames to <b>direct AI motion</b> and push quality up without the render times.</p>
+
+    <figure class="cs-video reveal">
+      <video src="Bespoke/Video/bespoke-anim.mp4" poster="Bespoke/Renders/bespoke-anim-poster.jpg" autoplay muted loop playsinline preload="metadata"></video>
+      <figcaption>Bespoke C-A · first Blender animation · 2025</figcaption>
+    </figure>
+  </section>
+
+  <!-- ═══ 07 THE BIGGER IDEA ═══ -->
+  <section class="cs-section wrap">
+    <p class="s-label">07 — The bigger idea</p>
+    <h2 class="s-h2">A low-tick,<br>high-sale workflow.</h2>
+    <p class="body-p">Bespoke doesn't need a blockbuster budget — it needs to <b>stop looking cheap.</b> The unlock is a hybrid pipeline: model and light in 3D, then use my own renders as control frames to guide AI (Seedream 5.0 Pro) toward crisp, high-resolution stills and motion. Real geometry keeps it on-brand; AI removes the render-time ceiling — one person turning unused assets into a full campaign, <b>without the AI-slop look.</b></p>
+
+    <div class="flow reveal">
+      <div class="flow-step"><div class="n">STEP 01</div><h4>Model</h4><p>Accurate bottle geometry and real materials in Blender — the source of truth.</p></div>
+      <div class="flow-step"><div class="n">STEP 02</div><h4>Light</h4><p>Look dev per fragrance — each scent gets its own colour and mood.</p></div>
+      <div class="flow-step"><div class="n">STEP 03</div><h4>Enhance</h4><p>Renders guide the AI pass, then I clean up and upscale by hand — resolution and polish up, cost and time down.</p></div>
+      <div class="flow-step"><div class="n">STEP 04</div><h4>Move</h4><p>Direct AI motion from clean 3D frames into scroll-stopping social video.</p></div>
+    </div>
+  </section>
+
+  <!-- ═══ 08 AI-ENHANCED FINALS ═══ -->
+  <section class="cs-section wrap">
+    <p class="s-label">08 — The proof</p>
+    <h2 class="s-h2">The pipeline,<br>running.</h2>
+    <p class="body-p">Not a mockup — actual output. Each of these started as my Blender model and label, went through the AI pass, then was <b>cleaned up and upscaled by hand</b> to reach campaign quality. Two different scents, two different worlds, one repeatable process. <b>Tap "prompt" on any image</b> to see exactly how it was directed.</p>
+
+    <div class="finals-grid reveal">
+      <div class="final-card">
+        <span class="badge">Woman · Spiced Honey &amp; Oud</span>
+        <img src="Bespoke/Renders/honey-oud-hero.jpg" alt="Bespoke London Woman — Spiced Honey &amp; Oud, AI-enhanced final with woman's shadow silhouette" />
+        <details>
+          <summary>Prompt ↗</summary>
+          <div class="prompt-panel"><div>
+            <span class="k">Seedream 5 Pro · control frame + logo ref</span>
+            <p>A golden perfume bottle with the label "BESPOKE LONDON" stands in the center of the frame. To its left, a large piece of honeycomb and a sprig of fern are visible. To its right, two medium sized pieces of dark, textured wood are placed. In the background we are in a outside cozy natural space, the silhouette of a woman figure similar resemblance to the bottle as if the bottle cast the shadow is cast on a light-colored wall, illuminated by warm, directional light that creates a dramatic effect. The overall aesthetic is luxurious and sophisticated, with a focus on natural elements and soft lighting.</p>
+          </div></div>
+        </details>
+      </div>
+      <div class="final-card">
+        <span class="badge">Caramel Amber &amp; Cashmere</span>
+        <img src="Bespoke/Renders/hero-ai.jpg" alt="Bespoke London — Caramel Amber &amp; Cashmere, AI-enhanced final with suspended ingredients" />
+        <details>
+          <summary>Prompt ↗</summary>
+          <div class="prompt-panel"><div>
+            <span class="k">Seedream 5 Pro · control frame + logo ref</span>
+            <p>Premium perfume advertising shot of a deep-red Bespoke London bottle, upright and hero-lit, with caramel shards, amber resin chunks, cashmere-soft wool fibres and cinnamon bark suspended in orbit around it, frozen mid-motion. Dark chocolate-brown backdrop with a warm spotlight pool. Dramatic side lighting, glossy specular highlights on the glass, fine dust particles catching the light. Luxury fragrance campaign, macro clarity, photorealistic, 8k.</p>
+          </div></div>
+        </details>
+      </div>
+    </div>
+
+    <p class="body-p" style="margin-top:clamp(32px,4.5vh,52px)">Model, look dev and the first two campaign finals are done — the checkpoint, not the finish. Next: run the whole Bespoke range through the same pipeline, each scent with its own world, and cut a proper product film. Same brand I love, marketed the way it deserves.</p>
+
+    <div class="status-chips reveal">
+      <span class="chip done">Bottle modelled</span>
+      <span class="chip done">Glass look dev</span>
+      <span class="chip done">Scene studies</span>
+      <span class="chip done">First animation</span>
+      <span class="chip done">3D → AI finals ×2</span>
+      <span class="chip next">Rebuild the film</span>
+      <span class="chip next">Expand to full range</span>
+    </div>
+  </section>
+
+</main>
+
+<!-- PROJECT NAV -->
+<div class="wrap">
+  <nav class="project-nav">
+    <div></div>
+    <a href="Voucht.html" class="pnav-link right">
+      <span class="dir">Next project</span>
+      <span class="ptitle">Voucht →</span>
+    </a>
+  </nav>
+</div>
+
+<footer class="foot wrap">
+  <div class="foot-in">
+    <span class="mono">© 2026 Jelani Bryan — Made in London, with intent</span>
+    <span class="mono top" onclick="scrollTo({top:0,behavior:'smooth'})">Back to top ↑</span>
+  </div>
+</footer>
+
+<script src="image-slot.js"></script>
+<script>
+  const nav = document.getElementById('nav');
+  addEventListener('scroll', () => nav.classList.toggle('stuck', scrollY > 16), {passive:true});
+  const revs = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  function checkReveal(){
+    const vh = window.innerHeight || 800;
+    for(let i = revs.length - 1; i >= 0; i--){
+      if(revs[i].getBoundingClientRect().top < vh * 0.9){ revs[i].classList.add('in'); revs.splice(i,1); }
+    }
+  }
+  addEventListener('scroll', checkReveal, {passive:true});
+  addEventListener('resize', checkReveal);
+  checkReveal();
+  setTimeout(function(){
+    revs.slice().forEach(function(el){
+      if(el.getBoundingClientRect().top < window.innerHeight){ el.classList.add('in'); }
+    });
+  }, 1800);
+</script>
+</body>
+</html>

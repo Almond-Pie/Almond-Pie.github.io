@@ -9,6 +9,7 @@
 !/Capoeira.html
 !/CS500.html
 !/Explorations.html
+!/Bespoke.html
 !/Portfolio.html
 !/index.html
 !/Voucht.html
@@ -21,6 +22,9 @@
 !/Voucht/**
 !/Video Ad's/**
 !/assets/**
+# Bespoke: only the web-optimised assets (not the multi-GB source renders/shortcuts)
+!/Bespoke/**/*.jpg
+!/Bespoke/**/*.mp4
 
 # Re-exclude things that snuck back in via the folder allowlists above
 Video Ad's/Base 44 Spec Ad-source.mp4
