@@ -28,6 +28,11 @@
 
 # Re-exclude things that snuck back in via the folder allowlists above
 Video Ad's/Base 44 Spec Ad-source.mp4
+# Bulky source videos (only the web-optimised versions are committed)
+Bespoke/Video/Bespoke_Mens.mp4
+Bespoke/Video/Bespoke_Womens.mp4
+assets/cs500/Pan_out_CS_500.mp4
+assets/cs500/W.I.P/
 *.af
 *.af~lock~
 **/node_modules/
