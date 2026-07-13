@@ -18,7 +18,7 @@
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <style>
   :root{
     --paper:#06070E; --panel:#0C0E1C; --panel2:#11142A;
@@ -26,7 +26,7 @@
     --line:rgba(180,190,235,.12);
     --gold:#FFC558; --coral:#FF6B3D; --celest:#6FA8FF; --violet:#9A7BFF; --green:#7CE3A0;
     --prism:linear-gradient(90deg,#FFC65C,#FF8A3D,#E8503D,#9E2E45);
-    --disp:'Bricolage Grotesque', system-ui, sans-serif;
+    --disp:'JetBrains Mono', ui-monospace, monospace;
     --body:'Hanken Grotesk', system-ui, sans-serif;
     --mono:'JetBrains Mono', ui-monospace, monospace;
     --maxw:1380px; --pad:clamp(20px,5vw,80px);
@@ -169,7 +169,7 @@
           <p class="cs-sub reveal">A hard-surface modeling study, learning to take a product from a block-out to a lit, camera-ready render, entirely in Blender.</p>
         </div>
         <div class="cs-hero-img reveal">
-          <img src="assets/cs500/hero.jpg" alt="CS-500 smartwatch concept, 3/4 render" />
+          <img src="assets/cs500/straight.jpg" alt="CS-500 smartwatch concept, straight-on render" />
         </div>
       </div>
     </div>
@@ -242,27 +242,19 @@
           <div class="render-footer">Hero, 3/4 pitch angle</div>
         </div>
       </div>
-
-      <figure class="reveal" style="margin-top:clamp(20px,3.5vh,40px);border-radius:20px;overflow:hidden;border:1px solid var(--line);background:#04050B">
-        <video src="assets/cs500/pan-out.mp4" poster="assets/cs500/pan-out-poster.jpg" autoplay muted loop playsinline preload="metadata" style="width:100%;display:block;aspect-ratio:16/9;object-fit:cover;background:#000" aria-label="CS-500 pan-out animation, rendered in Blender"></video>
-        <figcaption style="font-family:var(--mono);font-size:.64rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding:13px 18px;border-top:1px solid var(--line)">Pan-out reveal, animated and rendered in Blender</figcaption>
-      </figure>
     </div>
   </section>
 
-  <!-- STATUS -->
-  <section class="cs-section" style="border-top:1px solid var(--line)">
+  <!-- LOOK DEVELOPMENT -->
+  <section class="cs-section">
     <div class="wrap">
-      <div class="s-label reveal">04. Status</div>
-      <h2 class="s-h2 reveal">Where it stands</h2>
-      <div class="status-chips reveal">
-        <span class="chip done">Hard-surface model</span>
-        <span class="chip done">Material study</span>
-        <span class="chip done">Studio lighting</span>
-        <span class="chip done">Four camera angles</span>
-        <span class="chip next">Texture refinement</span>
-        <span class="chip next">Turntable animation</span>
-      </div>
+      <div class="s-label reveal">04. Look development</div>
+      <h2 class="s-h2 reveal">Grey before colour.</h2>
+      <p class="body-p reveal">Every render above started here: a plain grey clay block-out with no materials. Working untextured first is deliberate. With nothing to hide behind, the silhouette, panel gaps and proportions have to hold on their own. Only once the form read cleanly did the speckled plastic, brushed metal and strap go on.</p>
+      <figure class="reveal" style="margin-top:clamp(24px,4vh,44px);border-radius:20px;overflow:hidden;border:1px solid var(--line);background:#0a0a0f;max-width:520px">
+        <img src="assets/cs500/clay.jpg" alt="CS-500 untextured grey clay render showing raw form and topology" style="width:100%;display:block" loading="lazy">
+        <figcaption style="font-family:var(--mono);font-size:.64rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding:13px 18px;border-top:1px solid var(--line)">Untextured clay block-out, form before materials</figcaption>
+      </figure>
     </div>
   </section>
 

@@ -33,6 +33,8 @@ Bespoke/Video/Bespoke_Mens.mp4
 Bespoke/Video/Bespoke_Womens.mp4
 assets/cs500/Pan_out_CS_500.mp4
 assets/cs500/W.I.P/
+# CS-500 source renders (only the web-optimised jpgs are committed)
+assets/cs500/*.png
 *.af
 *.af~lock~
 **/node_modules/
