@@ -41,9 +41,7 @@
   .mono{font-family:var(--mono);font-size:.74rem;letter-spacing:.04em;text-transform:uppercase}
   .glow{text-shadow:0 0 26px rgba(255,197,88,.35),0 0 60px rgba(111,168,255,.18)}
 
-  .sky{position:fixed;inset:0;z-index:-2;pointer-events:none;
-    background:radial-gradient(1100px 700px at 50% -8%, rgba(111,168,255,.10), transparent 60%),
-      radial-gradient(900px 600px at 50% 108%, rgba(255,107,61,.07), transparent 60%),var(--void);}
+  .sky{position:fixed;inset:0;z-index:-2;pointer-events:none;background:#0A0D18}
   .grid{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.4;
     background-image:radial-gradient(rgba(150,160,210,.10) 1px, transparent 1px);background-size:34px 34px;
     -webkit-mask-image:radial-gradient(120% 80% at 50% 25%, #000 28%, transparent 76%);
@@ -131,7 +129,6 @@
   /* result + nextcta */
   .result p{font-size:1.14rem;color:var(--ink)}
   .nextcta{margin-top:clamp(40px,7vh,80px);border:1px solid var(--line);border-radius:20px;padding:clamp(28px,5vw,52px);text-align:center;background:var(--panel);position:relative;overflow:hidden}
-  .nextcta::before{content:"";position:absolute;left:50%;top:-40%;transform:translateX(-50%);width:600px;height:400px;background:radial-gradient(closest-side,rgba(255,107,61,.16),transparent);pointer-events:none}
   .nextcta h2{font-family:var(--disp);font-weight:800;font-size:clamp(1.8rem,5vw,3.2rem);letter-spacing:-.03em;margin-bottom:20px;position:relative}
   .btn{display:inline-flex;align-items:center;gap:10px;padding:15px 26px;border-radius:100px;font-weight:700;font-size:.98rem;border:1.5px solid var(--ink);background:var(--ink);color:var(--void);transition:transform .3s,box-shadow .3s,background .3s}
   .btn:hover{background:var(--gold);border-color:var(--gold);transform:translateY(-3px);box-shadow:0 0 30px rgba(255,197,88,.45)}

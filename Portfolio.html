@@ -46,9 +46,7 @@
   @keyframes blink{50%{opacity:0}}
 
   /* ambient layers */
-  .sky{position:fixed;inset:0;z-index:-2;pointer-events:none;
-    background:radial-gradient(1100px 700px at 78% 2%, rgba(111,168,255,.12), transparent 60%),
-      radial-gradient(900px 600px at 50% 108%, rgba(255,107,61,.06), transparent 60%),var(--void)}
+  .sky{position:fixed;inset:0;z-index:-2;pointer-events:none;background:#0A0D18}
   .sky::before{content:"";position:absolute;inset:0;opacity:.55;
     background-image:radial-gradient(1.1px 1.1px at 20% 30%,rgba(255,255,255,.6),transparent),
       radial-gradient(1px 1px at 70% 20%,rgba(255,255,255,.5),transparent),
@@ -62,13 +60,7 @@
     mask-image:radial-gradient(130% 90% at 70% 20%,#000 28%,transparent 78%)}
 
   /* gradient + dot band under the hero, full page (Base 44 inspired) */
-  .grad-band{position:relative;isolation:isolate;
-    background:linear-gradient(180deg,
-      var(--void) 0%,
-      color-mix(in srgb, var(--celest) 16%, #05060c) 30%,
-      color-mix(in srgb, var(--celest) 13%, #070812) 54%,
-      color-mix(in srgb, var(--violet) 11%, #08060f) 76%,
-      color-mix(in srgb, var(--coral) 12%, #0b0710) 100%);}
+  .grad-band{position:relative;isolation:isolate;background:#0A0D18}
   .grad-band::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
     background-image:radial-gradient(rgba(255,255,255,.11) .9px, transparent 1.1px);
     background-size:15px 15px;
@@ -244,7 +236,6 @@
 
   /* contact */
   .contact{position:relative}
-  .contact::before{content:"";position:absolute;left:50%;top:-46%;transform:translateX(-50%);width:820px;height:640px;background:radial-gradient(closest-side,rgba(255,107,61,.15),transparent 72%);pointer-events:none}
   .contact h2{font-family:var(--disp);font-weight:800;font-size:clamp(2.4rem,9vw,7rem);line-height:.9;letter-spacing:-.04em;position:relative;text-transform:uppercase}
   .contact-sub{font-size:1.1rem;max-width:50ch;margin:22px 0 34px;line-height:1.55;color:var(--muted)}
   .contact-cta{margin:6px 0 40px}
@@ -267,7 +258,7 @@
   .modal-box .btn{width:100%;justify-content:center;margin-top:6px;border:0;cursor:pointer}
   .modal-note{font-family:var(--mono);font-size:.68rem;color:var(--faint);margin-top:16px;line-height:1.5}
   /* footer */
-  footer.foot{border-top:1px solid var(--line);padding-block:26px}
+  footer.foot{position:relative;background:#0A0D18;border-top:1px solid var(--line);padding-block:26px}
   .foot-in{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px}
   .foot-l{font-family:var(--disp);font-weight:800;font-size:clamp(1.3rem,3vw,2rem);letter-spacing:-.02em;text-transform:uppercase}
   .foot-social{display:flex;gap:6px;font-family:var(--mono)}
@@ -524,7 +515,16 @@
     v.muted=true; v.defaultMuted=true; v.loop=true; v.autoplay=true; v.playsInline=true; v.preload='auto';
     v.setAttribute('muted',''); v.setAttribute('playsinline',''); v.poster='assets/hero.png';
     var s=document.createElement('source'); s.src='assets/hero.mp4'; s.type='video/mp4'; v.appendChild(s);
-    v.addEventListener('loadeddata',function(){ bg.classList.add('has-media'); bg.appendChild(v); var p=v.play&&v.play(); if(p&&p.catch)p.catch(function(){}); });
+    function reveal(){ bg.classList.add('has-media'); bg.appendChild(v); var p=v.play&&v.play(); if(p&&p.catch)p.catch(function(){}); }
+    // hero.png is an exact export of frame 0, so nudge the video one frame ahead before it
+    // takes over from the poster: no repeated frame, playback just continues forward.
+    v.addEventListener('loadeddata',function(){
+      var nudged=false;
+      function onSeeked(){ if(nudged) return; nudged=true; reveal(); }
+      v.addEventListener('seeked',onSeeked,{once:true});
+      try{ v.currentTime=0.04; }catch(e){}
+      setTimeout(function(){ if(!nudged){ nudged=true; reveal(); } },250); // fallback if 'seeked' never fires
+    },{once:true});
     v.addEventListener('error',function(){});
     s.addEventListener('error',function(){});
     v.load();
